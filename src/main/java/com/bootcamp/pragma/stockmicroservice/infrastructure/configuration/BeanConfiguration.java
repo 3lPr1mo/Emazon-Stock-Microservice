@@ -1,6 +1,4 @@
 package com.bootcamp.pragma.stockmicroservice.infrastructure.configuration;
-
-import com.bootcamp.pragma.stockmicroservice.application.mapper.CategoryMapper;
 import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.CategoryUseCase;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.ICategoryPersistencePort;

@@ -12,7 +12,7 @@ import lombok.Getter;
 public class CreateCategory {
     @NotBlank(message = CreateCategoryConstants.NAME_IS_MANDATORY)
     @NotNull(message = CreateCategoryConstants.NAME_IS_MANDATORY)
-    @Size(max = CreateCategoryConstants.NAME_MAX_LENGTH_VALUE, message = CreateCategoryConstants.NAME_MAX_LENGHT)
+    @Size(max = CreateCategoryConstants.NAME_MAX_LENGTH_VALUE, message = CreateCategoryConstants.NAME_MAX_LENGTH)
     private final String name;
 
     @NotBlank(message = CreateCategoryConstants.DESCRIPTION_IS_MANDATORY)

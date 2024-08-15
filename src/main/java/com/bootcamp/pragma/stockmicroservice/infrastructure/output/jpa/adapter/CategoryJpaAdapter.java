@@ -6,8 +6,6 @@ import com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.mapper.Ca
 import com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 public class CategoryJpaAdapter implements ICategoryPersistencePort {
 
