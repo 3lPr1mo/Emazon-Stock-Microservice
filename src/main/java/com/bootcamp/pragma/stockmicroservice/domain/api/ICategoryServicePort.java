@@ -1,4 +1,7 @@
 package com.bootcamp.pragma.stockmicroservice.domain.api;
 
-public class ICategoryServicePort {
+import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
+
+public interface ICategoryServicePort {
+    void saveCategory(Category category);
 }
