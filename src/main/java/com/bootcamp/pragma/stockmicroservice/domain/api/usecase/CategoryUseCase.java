@@ -4,6 +4,8 @@ import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.ICategoryPersistencePort;
 
+import java.util.Optional;
+
 public class CategoryUseCase implements ICategoryServicePort {
 
     private final ICategoryPersistencePort categoryPersistencePort;
