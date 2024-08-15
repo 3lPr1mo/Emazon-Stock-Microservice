@@ -1,4 +1,4 @@
-package com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.exceptionhandler;
+package com.bootcamp.pragma.stockmicroservice.infrastructure.exceptionhandler;
 
 public enum ExceptionResponse {
 
