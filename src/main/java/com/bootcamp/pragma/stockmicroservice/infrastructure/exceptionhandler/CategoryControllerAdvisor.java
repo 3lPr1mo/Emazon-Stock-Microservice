@@ -1,23 +1,38 @@
 package com.bootcamp.pragma.stockmicroservice.infrastructure.exceptionhandler;
 
-import com.bootcamp.pragma.stockmicroservice.infrastructure.exception.CategoryAlreadyExist;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.CategoryAlreadyExistError;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.CategoryFieldExceedsLimitError;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class CategoryControllerAdvisor {
 
-    @ExceptionHandler(CategoryAlreadyExist.class)
-    public ResponseEntity<Map<String, String>> handleCategoryAlreadyExistException(CategoryAlreadyExist categoryAlreadyExist) {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(Collections.singletonMap("message", "Category already exist"));
+    @ExceptionHandler(CategoryAlreadyExistError.class)
+    public ResponseEntity<ExceptionResponse> handleCategoryAlreadyExistException(CategoryAlreadyExistError ex) {
+        ExceptionResponse response = new ExceptionResponse(
+          ex.getMessage(),
+          HttpStatus.BAD_REQUEST.toString(),
+          LocalDateTime.now()
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(CategoryFieldExceedsLimitError.class)
+    public ResponseEntity<ExceptionResponse> handleCategoryNameExceedsLimitException(CategoryFieldExceedsLimitError ex) {
+        ExceptionResponse response = new ExceptionResponse(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
