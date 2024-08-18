@@ -1,4 +1,4 @@
-package com.bootcamp.pragma.stockmicroservice.infrastructure.configuration;
+package com.bootcamp.pragma.stockmicroservice.configuration;
 import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.CategoryUseCase;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.ICategoryPersistencePort;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class BeanConfiguration {
+public class CategoryBeanConfiguration {
 
     private final CategoryRepository categoryRepository;
     private final CategoryEntityMapper categoryEntityMapper;
