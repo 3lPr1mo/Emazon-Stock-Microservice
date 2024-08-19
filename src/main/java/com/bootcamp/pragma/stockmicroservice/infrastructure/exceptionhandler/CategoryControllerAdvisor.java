@@ -2,6 +2,7 @@ package com.bootcamp.pragma.stockmicroservice.infrastructure.exceptionhandler;
 
 import com.bootcamp.pragma.stockmicroservice.domain.exception.CategoryAlreadyExistError;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.CategoryFieldExceedsLimitError;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.NoDataFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,16 @@ public class CategoryControllerAdvisor {
 
     @ExceptionHandler(CategoryFieldExceedsLimitError.class)
     public ResponseEntity<ExceptionResponse> handleCategoryNameExceedsLimitException(CategoryFieldExceedsLimitError ex) {
+        ExceptionResponse response = new ExceptionResponse(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(NoDataFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleNoDataFoundException(NoDataFoundException ex) {
         ExceptionResponse response = new ExceptionResponse(
                 ex.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),

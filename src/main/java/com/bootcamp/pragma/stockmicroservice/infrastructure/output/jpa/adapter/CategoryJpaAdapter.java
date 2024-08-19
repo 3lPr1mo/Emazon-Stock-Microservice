@@ -6,7 +6,11 @@ import com.bootcamp.pragma.stockmicroservice.domain.spi.ICategoryPersistencePort
 import com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.mapper.CategoryEntityMapper;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,5 +31,12 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
     @Override
     public Optional<Category> findCategoryByName(String name) {
         return categoryRepository.findByName(name).map(categoryEntityMapper::categoryEntityToModel);
+    }
+
+    @Override
+    public List<Category> findAllCategories(int page, int size, boolean isAsc) {
+        Sort sort = isAsc ? Sort.by("name").ascending() : Sort.by("name").descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return categoryEntityMapper.toModelList(categoryRepository.findAll(pageable).getContent());
     }
 }
