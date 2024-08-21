@@ -6,6 +6,7 @@ import com.bootcamp.pragma.stockmicroservice.application.dto.response.CategoryRe
 import com.bootcamp.pragma.stockmicroservice.application.mapper.CategoryMapper;
 import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,19 @@ public class CategoryHandler implements ICategoryHandler {
     }
 
     @Override
-    public List<CategoryResponse> findAll(int page, int size, boolean isAsc) {
-        List<Category> categories = categoryServicePort.findAllCategories(page, size, isAsc);
-        return categoryMapper.modelToResponseList(categories);
+    public ContentPage<CategoryResponse> findAll(int page, int size, boolean isAsc) {
+        ContentPage<Category> categoryContentPage = categoryServicePort.findAllCategoriesPage(page, size, isAsc);
+        List<Category> categories = categoryContentPage.getContent();
+        List<CategoryResponse> categoryResponses = categoryMapper.modelToResponseList(categories);
+        return new ContentPage<>(
+                categoryContentPage.getTotalPage(),
+                categoryContentPage.getTotalElements(),
+                categoryContentPage.getPageNumber(),
+                categoryContentPage.getPageSize(),
+                categoryContentPage.isFirst(),
+                categoryContentPage.isLast(),
+                categoryResponses
+        );
     }
+
 }

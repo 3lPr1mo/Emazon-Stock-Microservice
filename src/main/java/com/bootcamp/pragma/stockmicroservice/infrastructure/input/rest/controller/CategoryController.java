@@ -3,14 +3,13 @@ package com.bootcamp.pragma.stockmicroservice.infrastructure.input.rest.controll
 import com.bootcamp.pragma.stockmicroservice.application.ICategoryHandler;
 import com.bootcamp.pragma.stockmicroservice.application.dto.request.CreateCategory;
 import com.bootcamp.pragma.stockmicroservice.application.dto.response.CategoryResponse;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.util.CategoryConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -26,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<CategoryResponse>> getAllCategories(
+    public ResponseEntity<ContentPage<CategoryResponse>> getAllCategories(
             @RequestParam(defaultValue = CategoryConstants.FIND_CATEGORIES_DEFAULT_PAGE) int page,
             @RequestParam(defaultValue = CategoryConstants.FIND_CATEGORIES_DEFAULT_SIZE) int size,
             @RequestParam(defaultValue = CategoryConstants.FIND_CATEGORIES_DEFAULT_IS_ASC) boolean isAsc

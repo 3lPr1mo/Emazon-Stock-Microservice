@@ -1,11 +1,9 @@
 package com.bootcamp.pragma.stockmicroservice.domain.api;
 
 import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
-
-import java.util.List;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 
 public interface ICategoryServicePort {
     void saveCategory(Category category);
-
-    List<Category> findAllCategories(int page, int size, boolean isAsc);
+    ContentPage<Category> findAllCategoriesPage(int page, int size, boolean isAsc);
 }
