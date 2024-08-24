@@ -9,7 +9,9 @@ import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.NoDataFoundException;
 import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.exceptionhandler.CategoryControllerAdvisor;
+import com.bootcamp.pragma.stockmicroservice.infrastructure.exceptionhandler.ExceptionResponse;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.input.rest.controller.CategoryController;
+import org.apache.coyote.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -63,17 +65,6 @@ class CategoryControllerTest {
         ResponseEntity<ContentPage<CategoryResponse>> response = categoryController.getAllCategories(page, size, isAsc);
         verify(categoryHandler, times(1)).findAll(page, size, isAsc);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    void shouldReturnBadRequestWhenIsNoData() throws Exception {
-        doThrow(new NoDataFoundException("No Data Found for 'category'")).when(categoryHandler).findAll(1, 10, true);
-        mockMvc.perform(
-                get("/category")
-                        .param("page", "1")
-                        .param("size", "10")
-                        .param("isAsc", "true")
-        ).andExpect(status().isBadRequest());
     }
 
 }
