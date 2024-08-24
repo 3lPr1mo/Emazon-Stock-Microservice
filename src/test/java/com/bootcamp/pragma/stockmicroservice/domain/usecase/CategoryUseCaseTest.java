@@ -2,13 +2,17 @@ package com.bootcamp.pragma.stockmicroservice.domain.usecase;
 
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.CategoryUseCase;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.CategoryAlreadyExistError;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.NoDataFoundException;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.ICategoryPersistencePort;
+import com.bootcamp.pragma.stockmicroservice.domain.usecase.util.CategoryTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,19 +48,24 @@ class CategoryUseCaseTest {
     }
 
     @Test
-    void shouldReturnAllCategoriesWhenExist() {
+    void shouldReturnAllCategoriesPaged(){
         int page = 0;
         int size = 10;
         boolean isAsc = true;
-        List<Category> expectedCategories = List.of(
-                new Category(1L, "Comida", "Para comer"),
-                new Category(2L, "Electrodomesticos", "Para eletrificarse")
-        );
+        ContentPage<Category> expectedPage = CategoryTestUtil.generateContentPageCategory();
+        when(categoryPersistencePort.findAllCategories(page, size, isAsc)).thenReturn(expectedPage);
+        ContentPage<Category> actualPage = categoryUseCase.findAllCategoriesPage(page, size, isAsc);
+        verify(categoryPersistencePort, times(1)).findAllCategories(page, size, isAsc);
+        assertEquals(expectedPage, actualPage);
+    }
 
-        when(categoryPersistencePort.findAllCategories(page, size, isAsc)).thenReturn(expectedCategories);
-
-        List<Category> actualCategories = categoryUseCase.findAllCategories(page, size, isAsc);
-        assertEquals(expectedCategories, actualCategories);
+    @Test
+    void shouldThrowErrorWhenPageIsEmpty(){
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        when(categoryPersistencePort.findAllCategories(page, size, isAsc)).thenReturn(CategoryTestUtil.generateEmptyContentPageCategory());
+        assertThrows(NoDataFoundException.class, () -> categoryUseCase.findAllCategoriesPage(page, size, isAsc));
     }
 
 }
