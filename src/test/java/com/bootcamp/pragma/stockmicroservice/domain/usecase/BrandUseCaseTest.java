@@ -3,6 +3,7 @@ package com.bootcamp.pragma.stockmicroservice.domain.usecase;
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.BrandUseCase;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.BrandAlreadyExistsException;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Brand;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IBrandPersistencePort;
 import com.bootcamp.pragma.stockmicroservice.domain.usecase.util.BrandTestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +40,15 @@ class BrandUseCaseTest {
         Brand brand = BrandTestUtil.generateBrand();
         when(brandPersistencePort.findByName(brand.getName())).thenReturn(Optional.of(brand));
         assertThrows(BrandAlreadyExistsException.class, () -> brandUseCase.saveBrand(brand));
+    }
+
+    @Test
+    void shouldReturnAllBrandsWhenExistPaged() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        ContentPage<Brand> expectedPage = BrandTestUtil.generateBrandPage();
+        when(brandPersistencePort.findAllBrands(page, size, isAsc)).thenReturn(expectedPage);
     }
 
 }
