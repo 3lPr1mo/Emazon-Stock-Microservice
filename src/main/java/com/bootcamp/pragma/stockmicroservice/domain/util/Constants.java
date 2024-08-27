@@ -11,4 +11,5 @@ public class Constants {
     }
 
     public static final String NO_DATA_FOUND_CATEGORY_EXCEPTION_MESSAGE = "No Data Found for 'category'";
+    public static final String BRAND_ALREADY_EXISTS_MESSAGE = "Brand Already Exists";
 }
