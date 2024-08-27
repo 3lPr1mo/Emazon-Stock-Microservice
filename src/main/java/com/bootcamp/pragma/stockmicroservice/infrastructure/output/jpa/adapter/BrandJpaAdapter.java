@@ -1,10 +1,12 @@
 package com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.adapter;
 
 import com.bootcamp.pragma.stockmicroservice.domain.model.Brand;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IBrandPersistencePort;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.mapper.BrandEntityMapper;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.output.jpa.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 
@@ -22,5 +24,12 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
     @Override
     public Optional<Brand> findByName(String name) {
         return brandRepository.findByName(name).map(brandEntityMapper::entityToBrandModel);
+    }
+
+    @Override
+    public ContentPage<Brand> findAllBrands(int page, int size, boolean isAsc) {
+        Sort sort = isAsc ? Sort.by("name").ascending() : Sort.by("name").descending();
+
+        return null;
     }
 }
