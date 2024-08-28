@@ -3,7 +3,6 @@ package com.bootcamp.pragma.stockmicroservice.infrastructure.controller;
 import com.bootcamp.pragma.stockmicroservice.application.IBrandHandler;
 import com.bootcamp.pragma.stockmicroservice.application.dto.request.CreateBrand;
 import com.bootcamp.pragma.stockmicroservice.application.dto.response.BrandResponse;
-import com.bootcamp.pragma.stockmicroservice.domain.model.Brand;
 import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.input.rest.controller.BrandController;
 import org.junit.jupiter.api.BeforeEach;

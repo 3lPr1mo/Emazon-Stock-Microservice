@@ -28,7 +28,7 @@ public class BrandUseCase implements IBrandServicePort {
     public ContentPage<Brand> findAllBrands(int page, int size, boolean isAsc) {
         ContentPage<Brand> contentPage = brandPersistencePort.findAllBrands(page, size, isAsc);
         if (contentPage.getContent().isEmpty()) {
-            throw new NoDataFoundException(Constants.NO_DATA_FOUND_CATEGORY_EXCEPTION_MESSAGE);
+            throw new NoDataFoundException(Constants.NO_DATA_FOUND_BRAND_EXCEPTION_MESSAGE);
         }
         return contentPage;
     }
