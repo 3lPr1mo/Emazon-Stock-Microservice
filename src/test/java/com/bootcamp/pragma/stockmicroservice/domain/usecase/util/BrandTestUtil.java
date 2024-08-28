@@ -3,6 +3,7 @@ package com.bootcamp.pragma.stockmicroservice.domain.usecase.util;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Brand;
 import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BrandTestUtil {
@@ -28,6 +29,18 @@ public class BrandTestUtil {
                 true,
                 true,
                 generateBrands()
+        );
+    }
+
+    public static ContentPage<Brand> generateEmptyContentPageBrand(){
+        return new ContentPage<Brand>(
+                0,
+                0,
+                0,
+                0,
+                true,
+                true,
+                new ArrayList<>()
         );
     }
 }

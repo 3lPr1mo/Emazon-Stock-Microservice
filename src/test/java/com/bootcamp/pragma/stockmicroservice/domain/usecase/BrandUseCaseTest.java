@@ -2,6 +2,7 @@ package com.bootcamp.pragma.stockmicroservice.domain.usecase;
 
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.BrandUseCase;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.BrandAlreadyExistsException;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.NoDataFoundException;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Brand;
 import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IBrandPersistencePort;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -49,6 +51,18 @@ class BrandUseCaseTest {
         boolean isAsc = true;
         ContentPage<Brand> expectedPage = BrandTestUtil.generateBrandPage();
         when(brandPersistencePort.findAllBrands(page, size, isAsc)).thenReturn(expectedPage);
+        ContentPage<Brand> actualPage = brandUseCase.findAllBrands(page, size, isAsc);
+        verify(brandPersistencePort, times(1)).findAllBrands(page, size, isAsc);
+        assertEquals(expectedPage, actualPage);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenPageIsEmpty() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        when(brandPersistencePort.findAllBrands(page, size, isAsc)).thenReturn(BrandTestUtil.generateEmptyContentPageBrand());
+        assertThrows(NoDataFoundException.class, () -> brandUseCase.findAllBrands(page, size, isAsc));
     }
 
 }
