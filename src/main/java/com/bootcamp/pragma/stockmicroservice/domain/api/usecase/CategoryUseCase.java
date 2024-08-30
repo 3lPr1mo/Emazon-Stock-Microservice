@@ -33,4 +33,9 @@ public class CategoryUseCase implements ICategoryServicePort {
         return  contentPage;
     }
 
+    @Override
+    public Category findCategoryByName(String name) {
+        return categoryPersistencePort.findCategoryByName(name).orElseThrow(() -> new NoDataFoundException(Constants.NO_DATA_FOUND_CATEGORY_EXCEPTION_MESSAGE));
+    }
+
 }

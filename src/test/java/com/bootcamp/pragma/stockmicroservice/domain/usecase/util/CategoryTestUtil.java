@@ -55,4 +55,13 @@ public class CategoryTestUtil {
                 new ArrayList<>()
         );
     }
+
+    public static List<Category> generateMoreThanThreeCategories(){
+        return List.of(
+                new Category(1L, "Comida", "Pa' comer"),
+                new Category(2L, "Electrodomestico", "Cosas electricas"),
+                new Category(3L, "Aseo", "Para lavar"),
+                new Category(4L, "Tecnologia", "Ocio")
+        );
+    }
 }
