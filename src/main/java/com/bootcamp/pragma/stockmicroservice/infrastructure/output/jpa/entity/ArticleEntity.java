@@ -20,10 +20,16 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(unique = true, nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "price", columnDefinition = "Decimal(10,2)", nullable = false)
+    @Column(columnDefinition = "Decimal(10,2)", nullable = false)
     private Double price;
 
     @ManyToMany
