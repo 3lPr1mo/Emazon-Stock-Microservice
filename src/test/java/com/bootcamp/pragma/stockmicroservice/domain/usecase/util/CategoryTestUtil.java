@@ -17,7 +17,7 @@ public class CategoryTestUtil {
     public static List<Category> generateCategories(){
         return List.of(
                 new Category(1L, "Comida", "Pa' comer"),
-                new Category(1L, "Electrodomestico", "Cosas electricas")
+                new Category(2L, "Electrodomestico", "Cosas electricas")
         );
     }
 
@@ -53,6 +53,15 @@ public class CategoryTestUtil {
                 true,
                 true,
                 new ArrayList<>()
+        );
+    }
+
+    public static List<Category> generateMoreThanThreeCategories(){
+        return List.of(
+                new Category(1L, "Comida", "Pa' comer"),
+                new Category(2L, "Electrodomestico", "Cosas electricas"),
+                new Category(3L, "Aseo", "Para lavar"),
+                new Category(4L, "Tecnologia", "Ocio")
         );
     }
 }

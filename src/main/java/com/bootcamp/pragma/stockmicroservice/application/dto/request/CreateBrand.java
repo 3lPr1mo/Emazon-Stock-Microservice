@@ -17,6 +17,6 @@ public class CreateBrand {
 
     @NotNull(message = CreateBrandConstants.DESCRIPTION_IS_MANDATORY)
     @NotBlank(message = CreateBrandConstants.DESCRIPTION_IS_MANDATORY)
-    @Size(max = CreateBrandConstants.DESCRIPTION_MAX_LENGTH_VALUE, message = CreateBrandConstants.DECRIPTION_MAX_LENGTH_MESSAGE)
+    @Size(max = CreateBrandConstants.DESCRIPTION_MAX_LENGTH_VALUE, message = CreateBrandConstants.DESCRIPTION_MAX_LENGTH_MESSAGE)
     private String description;
 }

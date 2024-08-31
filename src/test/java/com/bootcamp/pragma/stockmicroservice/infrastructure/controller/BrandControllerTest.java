@@ -2,6 +2,8 @@ package com.bootcamp.pragma.stockmicroservice.infrastructure.controller;
 
 import com.bootcamp.pragma.stockmicroservice.application.IBrandHandler;
 import com.bootcamp.pragma.stockmicroservice.application.dto.request.CreateBrand;
+import com.bootcamp.pragma.stockmicroservice.application.dto.response.BrandResponse;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.input.rest.controller.BrandController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,14 @@ class BrandControllerTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
-
+    @Test
+    void getAllBrands() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        ResponseEntity<ContentPage<BrandResponse>> response = brandController.getAllBrands(page, size, isAsc);
+        verify(brandHandler, times(1)).findAllBrands(page, size, isAsc);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 
 }

@@ -2,7 +2,10 @@ package com.bootcamp.pragma.stockmicroservice.infrastructure.input.rest.controll
 
 import com.bootcamp.pragma.stockmicroservice.application.IBrandHandler;
 import com.bootcamp.pragma.stockmicroservice.application.dto.request.CreateBrand;
+import com.bootcamp.pragma.stockmicroservice.application.dto.response.BrandResponse;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.infrastructure.exceptionhandler.ExceptionResponse;
+import com.bootcamp.pragma.stockmicroservice.infrastructure.util.CategoryConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,10 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/brand")
@@ -35,6 +35,15 @@ public class BrandController {
     public ResponseEntity<Void> saveBrand(@Valid @RequestBody CreateBrand createBrand) {
         brandHandler.create(createBrand);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<ContentPage<BrandResponse>> getAllBrands(
+            @RequestParam(defaultValue = CategoryConstants.FIND_CATEGORIES_DEFAULT_PAGE) int page,
+            @RequestParam(defaultValue = CategoryConstants.FIND_CATEGORIES_DEFAULT_SIZE) int size,
+            @RequestParam(defaultValue = CategoryConstants.FIND_CATEGORIES_DEFAULT_IS_ASC) boolean isAsc
+    ) {
+        return ResponseEntity.ok(brandHandler.findAllBrands(page, size, isAsc));
     }
 
 }

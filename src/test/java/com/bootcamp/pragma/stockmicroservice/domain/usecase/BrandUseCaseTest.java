@@ -2,7 +2,9 @@ package com.bootcamp.pragma.stockmicroservice.domain.usecase;
 
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.BrandUseCase;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.BrandAlreadyExistsException;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.NoDataFoundException;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Brand;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IBrandPersistencePort;
 import com.bootcamp.pragma.stockmicroservice.domain.usecase.util.BrandTestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -39,6 +42,27 @@ class BrandUseCaseTest {
         Brand brand = BrandTestUtil.generateBrand();
         when(brandPersistencePort.findByName(brand.getName())).thenReturn(Optional.of(brand));
         assertThrows(BrandAlreadyExistsException.class, () -> brandUseCase.saveBrand(brand));
+    }
+
+    @Test
+    void shouldReturnAllBrandsWhenExistPaged() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        ContentPage<Brand> expectedPage = BrandTestUtil.generateBrandPage();
+        when(brandPersistencePort.findAllBrands(page, size, isAsc)).thenReturn(expectedPage);
+        ContentPage<Brand> actualPage = brandUseCase.findAllBrands(page, size, isAsc);
+        verify(brandPersistencePort, times(1)).findAllBrands(page, size, isAsc);
+        assertEquals(expectedPage, actualPage);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenPageIsEmpty() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        when(brandPersistencePort.findAllBrands(page, size, isAsc)).thenReturn(BrandTestUtil.generateEmptyContentPageBrand());
+        assertThrows(NoDataFoundException.class, () -> brandUseCase.findAllBrands(page, size, isAsc));
     }
 
 }

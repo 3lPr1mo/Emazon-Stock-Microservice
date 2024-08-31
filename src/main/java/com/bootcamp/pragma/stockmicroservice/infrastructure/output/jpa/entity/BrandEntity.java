@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Table(name = "marca")
+@Table(name = "brand")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,4 +24,7 @@ public class BrandEntity {
 
     @Column(nullable = false, length = 120)
     private String description;
+
+    @OneToMany(mappedBy = "brand")
+    private List<ArticleEntity> articles;
 }

@@ -8,4 +8,5 @@ public interface ICategoryPersistencePort {
     void saveCategory(Category category);
     Optional<Category> findCategoryByName(String name);
     ContentPage<Category> findAllCategories(int page, int size, boolean isAsc);
+    Optional<Category> findCategoryById(Long id);
 }
