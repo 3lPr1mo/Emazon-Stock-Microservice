@@ -15,16 +15,12 @@ import java.util.Set;
 
 public class ArticleUseCase implements IArticleServicePort {
 
-    private IArticlePersistencePort articlePersistencePort;
-    private ICategoryServicePort categoryServicePort;
+    private final IArticlePersistencePort articlePersistencePort;
+    private final ICategoryServicePort categoryServicePort;
 
     public ArticleUseCase(IArticlePersistencePort articlePersistencePort, ICategoryServicePort categoryServicePort) {
         this.articlePersistencePort = articlePersistencePort;
         this.categoryServicePort = categoryServicePort;
-    }
-
-    public ArticleUseCase(IArticlePersistencePort articlePersistencePort) {
-        this.articlePersistencePort = articlePersistencePort;
     }
 
     @Override
@@ -46,13 +42,12 @@ public class ArticleUseCase implements IArticleServicePort {
 
     private boolean categoriesAreUnique(List<Category> categories) {
         Set<Long> uniqueCategoriesId = Set.copyOf(categories.stream().map(Category::getId).toList());
-        Set<String> uniqueCategoriesName = Set.copyOf(categories.stream().map(Category::getName).toList());
-        return uniqueCategoriesId.size() == categories.size() && uniqueCategoriesName.size() == uniqueCategoriesId.size();
+        return uniqueCategoriesId.size() == categories.size();
     }
 
     private void checkIfCategoryExist(List<Category> categories) {
         for(Category  category : categories){
-            categoryServicePort.findCategoryByName(category.getName());
+            categoryServicePort.findCategoryById(category.getId());
         }
     }
 }

@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -41,7 +40,7 @@ public class ArticleEntity {
     private List<CategoryEntity> categories;
 
     //ManyToOne relation to Brand
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_brand", nullable = false)
-    private BrandEntity brandEntity;
+    private BrandEntity brand;
 }

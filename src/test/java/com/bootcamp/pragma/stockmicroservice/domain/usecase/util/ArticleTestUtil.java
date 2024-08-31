@@ -10,6 +10,8 @@ public class ArticleTestUtil {
     public static Article generateArticle() {
         return new Article(
                 1L,
+                "a",
+                "asdad",
                 1,
                 20.0,
                 CategoryTestUtil.generateCategories(),
@@ -20,6 +22,8 @@ public class ArticleTestUtil {
     public static Article generateArticleWithOutCategory() {
         return new Article(
                 1L,
+                "a",
+                "asdad",
                 1,
                 20.0,
                 List.of(),
@@ -30,6 +34,8 @@ public class ArticleTestUtil {
     public static Article generateArticleWithAboveCategoriesLimit() {
         return new Article(
                 1L,
+                "a",
+                "asdad",
                 1,
                 20.0,
                 CategoryTestUtil.generateMoreThanThreeCategories(),
@@ -40,6 +46,8 @@ public class ArticleTestUtil {
     public static Article generateArticleWithDuplicateCategories() {
         return new Article(
                 1L,
+                "a",
+                "asdad",
                 1,
                 20.0,
                 List.of(CategoryTestUtil.generateCategoy(), CategoryTestUtil.generateCategoy()),

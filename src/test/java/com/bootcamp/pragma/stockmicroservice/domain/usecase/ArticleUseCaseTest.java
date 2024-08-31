@@ -6,10 +6,8 @@ import com.bootcamp.pragma.stockmicroservice.domain.exception.DuplicateCategorie
 import com.bootcamp.pragma.stockmicroservice.domain.exception.ExcessiveCategoriesException;
 import com.bootcamp.pragma.stockmicroservice.domain.exception.InsufficientCategoriesException;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Article;
-import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IArticlePersistencePort;
 import com.bootcamp.pragma.stockmicroservice.domain.usecase.util.ArticleTestUtil;
-import com.bootcamp.pragma.stockmicroservice.domain.usecase.util.CategoryTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

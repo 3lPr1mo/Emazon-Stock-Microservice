@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class ArticleBeanConfiguration {
     private final ArticleRepository articleRepository;
     private final ArticleEntityMapper articleEntityMapper;
+    private final CategoryBeanConfiguration categoryBeanConfiguration;
 
     @Bean
     public IArticlePersistencePort articlePersistencePort() {
@@ -23,7 +24,7 @@ public class ArticleBeanConfiguration {
 
     @Bean
     public IArticleServicePort articleServicePort() {
-        return new ArticleUseCase(articlePersistencePort());
+        return new ArticleUseCase(articlePersistencePort(), categoryBeanConfiguration.categoryServicePort());
     }
 
 }

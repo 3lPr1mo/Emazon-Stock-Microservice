@@ -25,6 +25,6 @@ public class BrandEntity {
     @Column(nullable = false, length = 120)
     private String description;
 
-    @OneToMany(mappedBy = "brandEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "brand")
     private List<ArticleEntity> articles;
 }

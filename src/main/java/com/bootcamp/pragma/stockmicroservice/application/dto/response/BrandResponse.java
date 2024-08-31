@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class BrandResponse {
+    private Long id;
     private String name;
     private String description;
 }

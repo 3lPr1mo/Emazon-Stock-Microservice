@@ -4,11 +4,15 @@ import com.bootcamp.pragma.stockmicroservice.application.util.CreateArticleConst
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Getter
+@NoArgsConstructor
+@Setter
 public class CreateArticle {
     @NotBlank(message = CreateArticleConstants.NAME_IS_MANDATORY)
     @NotNull(message = CreateArticleConstants.NAME_IS_MANDATORY)
@@ -27,9 +31,7 @@ public class CreateArticle {
     private double price;
 
     @NotEmpty(message = CreateArticleConstants.CATEGORIES_MUST_NOT_BE_EMPTY)
-    private List<CreateCategory> categories;
+    private List<CategoryItem> categories;
 
-    @NotEmpty(message = CreateArticleConstants.BRAND_IS_MANDATORY)
-    @NotNull(message = CreateArticleConstants.BRAND_IS_MANDATORY)
-    private CreateBrand brand;
+    private BrandItem brand;
 }

@@ -17,7 +17,7 @@ public class CategoryTestUtil {
     public static List<Category> generateCategories(){
         return List.of(
                 new Category(1L, "Comida", "Pa' comer"),
-                new Category(1L, "Electrodomestico", "Cosas electricas")
+                new Category(2L, "Electrodomestico", "Cosas electricas")
         );
     }
 
