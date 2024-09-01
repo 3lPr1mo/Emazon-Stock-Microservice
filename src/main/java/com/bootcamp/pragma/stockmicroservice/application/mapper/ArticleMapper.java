@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CategoryMapper.class, BrandMapper.class})
 public interface ArticleMapper {
     @Mapping(target = "id", ignore = true)
     Article requestToArticleModel(CreateArticle createArticle);
