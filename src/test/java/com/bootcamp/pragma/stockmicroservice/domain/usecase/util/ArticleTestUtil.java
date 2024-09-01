@@ -1,6 +1,7 @@
 package com.bootcamp.pragma.stockmicroservice.domain.usecase.util;
 
 import com.bootcamp.pragma.stockmicroservice.domain.model.Article;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 
 import java.util.List;
 
@@ -52,6 +53,26 @@ public class ArticleTestUtil {
                 20.0,
                 List.of(CategoryTestUtil.generateCategoy(), CategoryTestUtil.generateCategoy()),
                 BrandTestUtil.generateBrand()
+        );
+    }
+
+    public static ContentPage<Article> generateArticlePage() {
+        return new ContentPage<>(
+          1,
+          2,
+          0,
+          10,
+          true,
+          true,
+          generateArticles()
+        );
+    }
+
+    public static List<Article> generateArticles() {
+        return List.of(
+                generateArticle(),
+                generateArticle(),
+                generateArticle()
         );
     }
 }
