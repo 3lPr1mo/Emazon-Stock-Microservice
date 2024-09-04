@@ -68,6 +68,18 @@ public class ArticleTestUtil {
         );
     }
 
+    public static ContentPage<Article> generateArticleEmpty() {
+        return new ContentPage<>(
+                1,
+                2,
+                0,
+                10,
+                true,
+                true,
+                List.of()
+        );
+    }
+
     public static List<Article> generateArticles() {
         return List.of(
                 generateArticle(),

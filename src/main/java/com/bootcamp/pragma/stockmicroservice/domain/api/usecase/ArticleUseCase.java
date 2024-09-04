@@ -2,10 +2,7 @@ package com.bootcamp.pragma.stockmicroservice.domain.api.usecase;
 
 import com.bootcamp.pragma.stockmicroservice.domain.api.IArticleServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.DuplicateCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.ExcessiveCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.InsufficientCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.NoDataFoundException;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.*;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Article;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
 import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
@@ -49,6 +46,9 @@ public class ArticleUseCase implements IArticleServicePort {
         if (contentPage.getContent().isEmpty()) {
             throw new NoDataFoundException(Constants.NO_DATA_FOUND_ARTICLE_EXCEPTION_MESSAGE);
         }
+        if(!isValidSortBy(sortBy)) {
+            throw new ArticlePageSortByIsInvalidException(ArticleConstants.INVALID_SORTBY_MESSAGE);
+        }
         return contentPage;
     }
 
@@ -61,5 +61,16 @@ public class ArticleUseCase implements IArticleServicePort {
         for(Category  category : categories){
             categoryServicePort.findCategoryById(category.getId());
         }
+    }
+
+    private boolean isValidSortBy(String sortBy) {
+        for (ArticleConstants.SortBy value : ArticleConstants.SortBy.values()) {
+            System.out.println(sortBy);
+            System.out.println(value.name().equalsIgnoreCase(sortBy));
+            if(!(value.name().equalsIgnoreCase(sortBy))){
+                return false;
+            }
+        }
+        return true;
     }
 }

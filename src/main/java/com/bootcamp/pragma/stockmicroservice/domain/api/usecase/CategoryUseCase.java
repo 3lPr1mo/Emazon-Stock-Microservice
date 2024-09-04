@@ -40,7 +40,7 @@ public class CategoryUseCase implements ICategoryServicePort {
 
     @Override
     public Category findCategoryById(Long id) {
-        return null;
+        return categoryPersistencePort.findCategoryById(id).orElseThrow(() -> new NoDataFoundException(Constants.NO_DATA_FOUND_CATEGORY_EXCEPTION_MESSAGE));
     }
 
 }
