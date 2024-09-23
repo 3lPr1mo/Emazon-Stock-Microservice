@@ -31,7 +31,7 @@ public class ArticleEntity {
     @Column(columnDefinition = "Decimal(10,2)", nullable = false)
     private Double price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "article_category",
             joinColumns = @JoinColumn(name = "id_article"),
@@ -40,7 +40,7 @@ public class ArticleEntity {
     private List<CategoryEntity> categories;
 
     //ManyToOne relation to Brand
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_brand", nullable = false)
     private BrandEntity brand;
 }

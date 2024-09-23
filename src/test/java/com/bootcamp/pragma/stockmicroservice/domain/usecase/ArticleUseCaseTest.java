@@ -2,10 +2,9 @@ package com.bootcamp.pragma.stockmicroservice.domain.usecase;
 
 import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.api.usecase.ArticleUseCase;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.DuplicateCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.ExcessiveCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.InsufficientCategoriesException;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.*;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Article;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IArticlePersistencePort;
 import com.bootcamp.pragma.stockmicroservice.domain.usecase.util.ArticleTestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -53,5 +53,39 @@ class ArticleUseCaseTest {
     void shouldThrowDuplicateCategoriesExceptionWhenCategoriesAreNotUnique() {
         Article article = ArticleTestUtil.generateArticleWithDuplicateCategories();
         assertThrows(DuplicateCategoriesException.class, () -> articleUseCase.saveArticle(article));
+    }
+
+    @Test
+    void shouldReturnArticlesWhenExistPageSortedByBrand() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        String sortBy = "brand";
+        ContentPage<Article> expectedPage = ArticleTestUtil.generateArticlePage();
+        when(articlePersistencePort.findAllArticles(page, size, isAsc, sortBy)).thenReturn(expectedPage);
+        ContentPage<Article> actualPage = articleUseCase.findAllArticles(page, size, isAsc, sortBy);
+        verify(articlePersistencePort, times(1)).findAllArticles(page,size,isAsc,sortBy);
+        assertEquals(expectedPage, actualPage);
+    }
+
+    @Test
+    void shouldThrowNoDataFoundExceptionWhenPageIsEmpty() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        String sortBy = "brand";
+        when(articlePersistencePort.findAllArticles(page, size, isAsc, sortBy)).thenReturn(ArticleTestUtil.generateArticleEmpty());
+        assertThrows(NoDataFoundException.class, () -> articleUseCase.findAllArticles(page, size, isAsc, sortBy));
+    }
+
+    @Test
+    void shouldThrowInvalidSortByExceptionWhenSortByIsDifferent() {
+        int page = 0;
+        int size = 10;
+        boolean isAsc = true;
+        String sortBy = "brand1";
+        when(articlePersistencePort.findAllArticles(page, size, isAsc, sortBy)).thenReturn(ArticleTestUtil.generateArticlePage());
+        assertThrows(ArticlePageSortByIsInvalidException.class, () -> articleUseCase.findAllArticles(page, size, isAsc, sortBy));
+
     }
 }

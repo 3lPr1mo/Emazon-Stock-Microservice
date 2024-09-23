@@ -2,13 +2,13 @@ package com.bootcamp.pragma.stockmicroservice.domain.api.usecase;
 
 import com.bootcamp.pragma.stockmicroservice.domain.api.IArticleServicePort;
 import com.bootcamp.pragma.stockmicroservice.domain.api.ICategoryServicePort;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.DuplicateCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.ExcessiveCategoriesException;
-import com.bootcamp.pragma.stockmicroservice.domain.exception.InsufficientCategoriesException;
+import com.bootcamp.pragma.stockmicroservice.domain.exception.*;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Article;
 import com.bootcamp.pragma.stockmicroservice.domain.model.Category;
+import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import com.bootcamp.pragma.stockmicroservice.domain.spi.IArticlePersistencePort;
 import com.bootcamp.pragma.stockmicroservice.domain.util.ArticleConstants;
+import com.bootcamp.pragma.stockmicroservice.domain.util.Constants;
 
 import java.util.List;
 import java.util.Set;
@@ -40,6 +40,18 @@ public class ArticleUseCase implements IArticleServicePort {
         articlePersistencePort.save(article);
     }
 
+    @Override
+    public ContentPage<Article> findAllArticles(int page, int size, boolean isAsc, String sortBy) {
+        ContentPage<Article> contentPage = articlePersistencePort.findAllArticles(page, size, isAsc, sortBy);
+        if (contentPage.getContent().isEmpty()) {
+            throw new NoDataFoundException(Constants.NO_DATA_FOUND_ARTICLE_EXCEPTION_MESSAGE);
+        }
+        if(!isValidSortBy(sortBy)) {
+            throw new ArticlePageSortByIsInvalidException(ArticleConstants.INVALID_SORTBY_MESSAGE);
+        }
+        return contentPage;
+    }
+
     private boolean categoriesAreUnique(List<Category> categories) {
         Set<Long> uniqueCategoriesId = Set.copyOf(categories.stream().map(Category::getId).toList());
         return uniqueCategoriesId.size() == categories.size();
@@ -49,5 +61,16 @@ public class ArticleUseCase implements IArticleServicePort {
         for(Category  category : categories){
             categoryServicePort.findCategoryById(category.getId());
         }
+    }
+
+    private boolean isValidSortBy(String sortBy) {
+        for (ArticleConstants.SortBy value : ArticleConstants.SortBy.values()) {
+            System.out.println(sortBy);
+            System.out.println(value.name().equalsIgnoreCase(sortBy));
+            if(!(value.name().equalsIgnoreCase(sortBy))){
+                return false;
+            }
+        }
+        return true;
     }
 }
