@@ -7,6 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.jsonwebtoken.security.SignatureException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,5 +27,16 @@ public class ValidationControllerAdvice {
         response.put("errors", errors);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<ExceptionResponse> handleSignatureException(final SignatureException e) {
+        ExceptionResponse response = new ExceptionResponse(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 }
