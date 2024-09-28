@@ -2,6 +2,7 @@ package com.bootcamp.pragma.stockmicroservice.application.handler;
 
 import com.bootcamp.pragma.stockmicroservice.application.IArticleHandler;
 import com.bootcamp.pragma.stockmicroservice.application.dto.request.CreateArticle;
+import com.bootcamp.pragma.stockmicroservice.application.dto.request.UpdateStockArticleRequest;
 import com.bootcamp.pragma.stockmicroservice.application.dto.response.ArticleResponse;
 import com.bootcamp.pragma.stockmicroservice.application.mapper.ArticleMapper;
 import com.bootcamp.pragma.stockmicroservice.domain.api.IArticleServicePort;
@@ -29,5 +30,10 @@ public class ArticleHandler implements IArticleHandler {
     public ContentPage<ArticleResponse> findAllArticles(int page, int size, boolean isAsc, String sortBy) {
         ContentPage<Article> articleContentPage = articleServicePort.findAllArticles(page, size, isAsc, sortBy);
         return articleMapper.modelToArticleResponsePage(articleContentPage);
+    }
+
+    @Override
+    public void updateStock(UpdateStockArticleRequest request) {
+        articleServicePort.updateStockArticle(request.getArticleId(), request.getQuantity());
     }
 }
