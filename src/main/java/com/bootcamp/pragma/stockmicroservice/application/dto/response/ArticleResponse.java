@@ -8,6 +8,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class ArticleResponse {
+    private Long id;
     private String name;
     private String description;
     private Integer quantity;
