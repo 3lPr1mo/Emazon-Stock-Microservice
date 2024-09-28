@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ArticleJpaAdapter implements IArticlePersistencePort {
@@ -41,5 +42,10 @@ public class ArticleJpaAdapter implements IArticlePersistencePort {
                 articlesPage.isLast(),
                 articles
         );
+    }
+
+    @Override
+    public Optional<Article> findArticleById(long id) {
+        return articleRepository.findById(id).map(articleEntityMapper::entityToArticleModel);
     }
 }
