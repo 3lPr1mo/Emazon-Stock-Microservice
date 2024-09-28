@@ -26,6 +26,7 @@ public class ConfigFilter {
                         .requestMatchers(HttpMethod.POST, "/category").hasAnyAuthority(Role.ADMINISTRADOR.name())
                         .requestMatchers(HttpMethod.POST, "/brand").hasAnyAuthority(Role.ADMINISTRADOR.name())
                         .requestMatchers(HttpMethod.POST, "/article").hasAnyAuthority(Role.ADMINISTRADOR.name())
+                        .requestMatchers(HttpMethod.PUT, "/article").hasAnyAuthority(Role.AUX_BODEGA.name())
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
