@@ -1,7 +1,9 @@
 package com.bootcamp.pragma.stockmicroservice.infrastructure.input.rest.controller;
 
 import com.bootcamp.pragma.stockmicroservice.application.IArticleHandler;
+import com.bootcamp.pragma.stockmicroservice.application.dto.request.UpdateStockArticleRequest;
 import com.bootcamp.pragma.stockmicroservice.application.dto.request.CreateArticle;
+import com.bootcamp.pragma.stockmicroservice.application.dto.response.AddStockArticleResponse;
 import com.bootcamp.pragma.stockmicroservice.application.dto.response.ArticleResponse;
 import com.bootcamp.pragma.stockmicroservice.domain.model.ContentPage;
 import jakarta.validation.Valid;
@@ -32,4 +34,11 @@ public class ArticleController {
     ) {
         return ResponseEntity.ok(articleHandler.findAllArticles(page, size, isAsc, sortBy));
     }
+
+    @PutMapping
+    public ResponseEntity<AddStockArticleResponse> addStockToArticle(@Valid @RequestBody UpdateStockArticleRequest request){
+        articleHandler.updateStock(request);
+        return ResponseEntity.status(HttpStatus.OK).body(new AddStockArticleResponse(true));
+    }
+
 }
