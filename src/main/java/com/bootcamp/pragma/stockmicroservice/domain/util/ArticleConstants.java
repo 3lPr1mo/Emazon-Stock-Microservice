@@ -14,4 +14,5 @@ public class ArticleConstants {
         BRAND
     }
     public static final String INVALID_SORTBY_MESSAGE = "Invalid sort by";
+    public static final String ARTICLE_NOT_FOUND_MESSAGE = "Article not found";
 }

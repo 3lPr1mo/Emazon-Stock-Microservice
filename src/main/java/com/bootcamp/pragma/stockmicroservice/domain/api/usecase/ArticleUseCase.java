@@ -52,6 +52,13 @@ public class ArticleUseCase implements IArticleServicePort {
         return contentPage;
     }
 
+    @Override
+    public void updateStockArticle(Long articleId, Integer quantity) {
+        Article article = findArticleById(articleId);
+        article.setQuantity(article.getQuantity() + quantity);
+        articlePersistencePort.save(article);
+    }
+
     private boolean categoriesAreUnique(List<Category> categories) {
         Set<Long> uniqueCategoriesId = Set.copyOf(categories.stream().map(Category::getId).toList());
         return uniqueCategoriesId.size() == categories.size();
@@ -65,12 +72,13 @@ public class ArticleUseCase implements IArticleServicePort {
 
     private boolean isValidSortBy(String sortBy) {
         for (ArticleConstants.SortBy value : ArticleConstants.SortBy.values()) {
-            System.out.println(sortBy);
-            System.out.println(value.name().equalsIgnoreCase(sortBy));
-            if(!(value.name().equalsIgnoreCase(sortBy))){
-                return false;
-            }
+            return value.name().equalsIgnoreCase(sortBy);
         }
-        return true;
+        return false;
+    }
+
+    private Article findArticleById(Long articleId) {
+        return articlePersistencePort.findArticleById(articleId).orElseThrow(
+                () -> new ArticleNotFoundException(ArticleConstants.ARTICLE_NOT_FOUND_MESSAGE));
     }
 }
